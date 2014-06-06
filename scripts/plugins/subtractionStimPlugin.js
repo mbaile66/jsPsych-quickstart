@@ -2,13 +2,6 @@ var html_string = createStimulus();
 
 $('body').html(html_string);
 
-// method two
-
-$('body').append($('<div>', {
-                    html: html_string,
-                    id: 'jspsych-single-stim-stimulus'
-                }));
-
 function createStimulus() 
 {
 var min = 1;
