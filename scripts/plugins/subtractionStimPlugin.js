@@ -34,10 +34,10 @@ while ((A - B - C) < 0)
 	B = Math.floor(Math.random() * (max - min + 1)) + min;
 	C = Math.floor(Math.random() * (max - min + 1)) + min;
 }
-//document.write(t,u,v);
+//print(t,u,v);
 while (P1 === P2)
 {
 	P2 = Math.floor(randomNumber2 * 11);
 }
-//document.write(t);
+//print(t);
 }
