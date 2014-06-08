@@ -1,6 +1,9 @@
-var html_string = createStimulus();
-
-$('body').html(html_string);
+/* sample usage
+ *
+ * var html_string = createStimulus();
+ * $('body').html(html_string);
+ *
+ */
 
 function createStimulus() 
 {
