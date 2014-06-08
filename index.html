@@ -21,10 +21,8 @@
     
     <script type="text/javascript">
         // Experiment parameters
-        var n_trials = 20;
-        var stimuli = [html_string];
-        var stimuli_types = [];
-
+        var stimuli = [createStimulus(), createStimulus(), createStimulus()];
+        
         // Experiment Instructions
         var welcome_message = '<div id="instructions"><p>Welcome to the experiment. Press enter to begin.</p></div>';
         
@@ -35,18 +33,6 @@
 
         var debrief = '<div id="instructions"><p>Thank you for participating! Press enter to see the data.</p></div>';
 
-        // Generating Random Order for Stimuli
-        var stimuli_random_order = [];
-        var opt_data = [];
-
-        for (var i = 0; i < n_trials; i++) {
-            var random_choice = Math.floor(Math.random() * stimuli.length);
-
-            stimuli_random_order.push(stimuli[random_choice]);
-            opt_data.push({
-                "stimulus_type": stimuli_types[random_choice]
-            });
-        }
         
         // Define experiment blocks
         var instruction_block = {
@@ -57,9 +43,10 @@
         
         var test_block = {
                 type: "single-stim",
-                stimuli: stimuli_random_order,
+                stimuli: stimuli,
                 choices: [37, 39],
-                data: opt_data
+                data: opt_data,
+                is_html: true
             };
             
         var debrief_block = {
