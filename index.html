@@ -20,8 +20,11 @@
     </body>
     
     <script type="text/javascript">
+		// create a stimulus
+		//var s = createStimulus();
+	
         // Experiment parameters
-        var stimuli = [createStimulus(), createStimulus(), createStimulus()];
+        //var stimuli = [s, s, createStimulus()];
         
         // Experiment Instructions
         var welcome_message = '<div id="instructions"><p>Welcome to the experiment. Press enter to begin.</p></div>';
@@ -35,16 +38,23 @@
 
         
         // Define experiment blocks
-        var instruction_block = {
+ /*        var instruction_block = {
                 type: "text",
                 text: [welcome_message, instructions],
                 timing_post_trial: 2500
             };
-        
+       
+		var practice_block = {
+				type: "single-stim",
+				stimuli: stimuli,
+				choices: [48,49,50,51,52,53,54,55,56,57,69,79],
+				is_html: true
+			};
+		
         var test_block = {
                 type: "single-stim",
                 stimuli: stimuli,
-                choices: [37, 39],
+                choices: [48,49,50,51,52,53,54,55,56,57,69,79],
                 //data: opt_data,
                 is_html: true
             };
@@ -53,11 +63,55 @@
                 type: "text",
                 text: [debrief]
             };
-            
+*/
+
+  var stimuli_random_order = [];
+        var opt_data = [];
+
+        for (var i = 0; i < 128; i++) {
+            var random_choice = Math.floor(Math.random() * stimuli_random_order.length);
+
+            stimuli_random_order.push(stimuli[random_choice]);
+            opt_data.push({
+                "stimulus_type": stimuli_types[random_choice]
+            });
+        }
+		
+		// create experiment with a loop
+		var experiment = [];
+		
+		for ( var i = 0; i < 256; i++){
+		
+			var stim = createStimulus();
+		
+			var first_answer_block = {
+				type: "single-stim",
+                stimuli: [stim],
+                choices: [48,49,50,51,52,53,54,55,56,57,69,79],
+                //data: opt_data,
+                is_html: true,
+				timing_post_trial: 0
+				//prompt: "Solve the problem and press 'o' for odd and 'e' for even.  It does not matter which you do first."
+			};
+			
+			var second_answer_block = {
+				type: "single-stim",
+                stimuli: [stim],
+                choices: [48,49,50,51,52,53,54,55,56,57,69,79],
+                //data: opt_data,
+                is_html: true
+				//prompt: "Solve the problem and press 'o' for odd and 'e' for even.  It does not matter which you do first."
+			};
+			
+			experiment.push(first_answer_block);
+			experiment.push(second_answer_block);
+			 
+		}
+           
 
         jsPsych.init({
             display_element: $('#jspsych_target'),
-            experiment_structure: [instruction_block, test_block, debrief_block],
+            experiment_structure: experiment, //[instruction_block, practice_block, test_block, debrief_block],
             on_finish: function(data) {
                 $("#jspsych_target").append($('<pre>', {
                     html: jsPsych.dataAsCSV()
