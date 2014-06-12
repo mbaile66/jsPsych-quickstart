@@ -65,13 +65,13 @@
                 if (!trial.is_html) {
                     display_element.append($('<img>', {
                         src: trial.a_path,
-                        "class": 'jspsych-same-different-stimulus'
+                        "class": 'jspsych-twostim-tworesponse-stimulus'
                     }));
                 }
                 else {
                     display_element.append($('<div>', {
                         html: trial.a_path,
-                        "class": 'stimulus'
+                        "class": 'jspsych-twostim-tworesponse-stimulus'
                     }));
                 }
                 setTimeout(function() {
@@ -79,25 +79,26 @@
                 }, trial.timing_first_stim);
                 break;
             case 2:
+                $('.jspsych-twostim-tworesponse-stimulus').remove();
                 if (!trial.is_html) {
                     display_element.append($('<img>', {
                         src: trial.b_path,
-                        "class": 'jspsych-same-different-stimulus',
-                        id: 'jspsych-same-different-second-stimulus'
+                        "class": 'jspsych-twostim-tworesponse-stimulus',
+                        id: 'jspsych-twostim-tworesponse--second-stimulus'
                     }));
                 }
                 else {
                     display_element.append($('<div>', {
                         html: trial.b_path,
-                        "class": 'jspsych-same-different-stimulus',
-                        id: 'jspsych-same-different-second-stimulus'
+                        "class": 'jspsych-twostim-tworesponse-stimulus',
+                        id: 'jspsych-twostim-tworesponse-second-stimulus'
                     }));
                 }
 
                 if (trial.timing_second_stim > 0) {
                     setTimeout(function() {
                         if (!sd_trial_complete) {
-                            $("#jspsych-same-different-second-stimulus").css('visibility', 'hidden');
+                            $("#jspsych-twostim-tworesponse-second-stimulus").css('visibility', 'hidden');
                         }
                     }, trial.timing_second_stim);
                 }
