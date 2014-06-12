@@ -11,8 +11,8 @@
         <script src="scripts/plugins/jspsych-text.js"></script>
         <script src="scripts/plugins/jspsych-single-stim.js"></script>
         <script src="scripts/plugins/subtractionStimPlugin.js"></script>
-		<script src="scripts/underscore_min.js"</script>
-		<script src="scripts/twostim-tworesponse.js"</script>
+	<script src="scripts/underscore_min.js"</script>
+	<script src="scripts/plugins/jspsych-twostim-tworesponse.js"</script>
         <!-- Load the stylesheet -->
         <link href="experiment.css" type="text/css" rel="stylesheet"></link>
     </head>
@@ -82,7 +82,19 @@
 		// create experiment with a loop
 		var experiment = [];
 		
-		var trial = [1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4];
+		var stimulus = [createStimulus(1), createStimulus(1)];
+		
+		var newplugin_block = {
+			type: 'twostim-tworesponse',
+			stimuli: [stimulus]
+		};
+		
+		experiment.push(newplugin_block);
+		
+	/*
+	 for now, comment all this out to test the new plugin
+	 
+	var trial = [1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4];
 		_.shuffle(trial);
 		for ( var i = 0; i < 128; i++){
 		
@@ -137,6 +149,7 @@
 			experiment.push(second_answer_block);
 			 
 		}
+		*/
            
 
         jsPsych.init({
