@@ -21,7 +21,7 @@
  * 
  */ 
 (function($) {
-    jsPsych['stimulus'] = (function() {
+    jsPsych['twostim-tworesponse'] = (function() {
 
         var plugin = {};
 
@@ -29,7 +29,7 @@
             var trials = new Array(params.stimuli.length);
             for (var i = 0; i < trials.length; i++) {
                 trials[i] = {};
-                trials[i].type = "stimulus";
+                trials[i].type = "twostim-tworesponse";
                 trials[i].a_path = params.stimuli[i][0];
                 trials[i].b_path = params.stimuli[i][1];
                 trials[i].answer = params.answer[i];
