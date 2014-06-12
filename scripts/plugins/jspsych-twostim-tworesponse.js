@@ -32,7 +32,7 @@
                 trials[i].type = "twostim-tworesponse";
                 trials[i].a_path = params.stimuli[i][0];
                 trials[i].b_path = params.stimuli[i][1];
-                trials[i].answer = params.answer[i];
+                //trials[i].answer = params.answer[i];
                 trials[i].same_key = params.same_key || 81; // default is 'q'
                 trials[i].different_key = params.different_key || 80; // default is 'p'
                 // timing parameters
@@ -115,15 +115,15 @@
                     var correct = false;
                     if (e.which == trial.same_key) {
                         flag = true;
-                        if (trial.answer == "same") {
-                            correct = true;
-                        }
+                        
+                        correct = true;
+                        
                     }
                     else if (e.which == trial.different_key) {
                         flag = true;
-                        if (trial.answer == "different") {
-                            correct = true;
-                        }
+                        
+                        correct = true;
+                        
                     }
                     if (flag) {
                         var endTime = (new Date()).getTime();
