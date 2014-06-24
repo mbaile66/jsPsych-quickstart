@@ -33,22 +33,18 @@
                 trials[i].a_path = params.stimuli[i][0];
                 trials[i].b_path = params.stimuli[i][1];
                 //trials[i].answer = params.answer[i];
-                trials[i].same_key = params.same_key || 81; // default is 'q'
-                trials[i].different_key = params.different_key || 80; // default is 'p'
+                trials[i].choices = params.choices;
                 // timing parameters
                 trials[i].timing_first_stim = params.timing_first_stim || 1000;
-                trials[i].timing_second_stim = params.timing_second_stim || 1000; // if -1, then second stim is shown until response.
-                trials[i].timing_gap = params.timing_gap || 0;
+                trials[i].timing_second_stim = params.timing_second_stim || -1; // if -1, then second stim is shown until response.
+                trials[i].timing_gap = (typeof params.timing_gap === 'undefined') ? 0 : params.timing_gap;
                 trials[i].timing_post_trial = (typeof params.timing_post_trial === 'undefined') ? 1000 : params.timing_post_trial;
                 // optional parameters
                 trials[i].is_html = (typeof params.is_html === 'undefined') ? false : true;
-                trials[i].prompt = (typeof params.prompt === 'undefined') ? "" : params.prompt;
                 trials[i].data = (typeof params.data === 'undefined') ? {} : params.data[i];
             }
             return trials;
         };
-
-        var sd_trial_complete = false;
 
         plugin.trial = function(display_element, block, trial, part) {
             
@@ -58,103 +54,140 @@
             
             // put this back in after updating to jsPsych v2.4
             //trial = jsPsych.normalizeTrialVariables(trial);
-            
-            
-            switch (part) {
-            case 1:
-                sd_trial_complete = false;
-                // show image
-                if (!trial.is_html) {
-                    display_element.append($('<img>', {
-                        src: trial.a_path,
-                        "class": 'jspsych-twostim-tworesponse-stimulus'
-                    }));
-                }
-                else {
-                    display_element.append($('<div>', {
-                        html: trial.a_path,
-                        "class": 'jspsych-twostim-tworesponse-stimulus'
-                    }));
-                }
-                setTimeout(function() {
-                    plugin.trial(display_element, block, trial, part + 1);
-                }, trial.timing_first_stim);
-                break;
-            case 2:
-                $('.jspsych-twostim-tworesponse-stimulus').remove();
-                if (!trial.is_html) {
+			
+			var trial_complete = false;
+              
+			// show image
+			if (!trial.is_html) {
+				display_element.append($('<img>', {
+					src: trial.a_path,
+					"class": 'jspsych-twostim-tworesponse-stimulus'
+				}));
+			}
+			else {
+				display_element.append($('<div>', {
+					html: trial.a_path,
+					"class": 'jspsych-twostim-tworesponse-stimulus'
+				}));
+			}
+			
+			setTimeout(function() {
+				$('.jspsych-twostim-tworesponse-stimulus').remove();
+				if(trial.timing_gap === 0) {
+					showSecondImage();
+				} else {
+					setTimeout(function() { showSecondImage(); }, trial.timing_gap);
+				}
+			}, trial.timing_first_stim);
+              
+			function showSecondImage() {
+			
+				if (!trial.is_html) {
                     display_element.append($('<img>', {
                         src: trial.b_path,
-                        "class": 'jspsych-twostim-tworesponse-stimulus',
-                        id: 'jspsych-twostim-tworesponse--second-stimulus'
+                        class: 'jspsych-twostim-tworesponse-stimulus',
+                        id: 'jspsych-twostim-tworesponse-second-stimulus'
                     }));
                 }
                 else {
                     display_element.append($('<div>', {
                         html: trial.b_path,
-                        "class": 'jspsych-twostim-tworesponse-stimulus',
+                        class: 'jspsych-twostim-tworesponse-stimulus',
                         id: 'jspsych-twostim-tworesponse-second-stimulus'
                     }));
                 }
-
-                if (trial.timing_second_stim > 0) {
+				
+				if (trial.timing_second_stim > 0) {
                     setTimeout(function() {
-                        if (!sd_trial_complete) {
+                        if (!trial_complete) {
                             $("#jspsych-twostim-tworesponse-second-stimulus").css('visibility', 'hidden');
                         }
                     }, trial.timing_second_stim);
                 }
-                
-                //show prompt here
-                if (trial.prompt !== "") {
-                    display_element.append(trial.prompt);
-                }
-
+				
                 var startTime = (new Date()).getTime();
+				
+				var valid_response = [];
+				for(var i=0; i<trial.choices.length; i++){
+					valid_response[i] = false;
+				}
+				
+				var response_times = [];
+				var key_presses = [];
 
                 var resp_func = function(e) {
-                    var flag = false;
-                    var correct = false;
-                    if (e.which == trial.same_key) {
-                        flag = true;
-                        
-                        correct = true;
-                        
-                    }
-                    else if (e.which == trial.different_key) {
-                        flag = true;
-                        
-                        correct = true;
-                        
-                    }
-                    if (flag) {
-                        var endTime = (new Date()).getTime();
+				
+					var endTime = (new Date()).getTime();
+					
+					var valid_choice = false;
+					var which_choice = -1;
+					
+					for(var i=0; i<trial.choices.length; i++){
+						for(var j=0; j<trial.choices[i].length; j++){
+							if(e.which == trial.choices[i][j]) {
+								which_choice = i;
+								if(valid_response[which_choice] === false) {
+									valid_choice = true;
+								}
+							}
+						}
+					}
+					
+                    if (valid_choice) {
+					
                         var rt = (endTime - startTime);
+						
+						response_times[which_choice] = rt;
+						
+						key_presses[which_choice] = e.which;
+						
+						valid_response[which_choice] = true;
+						
+						var done = true;
+						for(var i=0; i<valid_response.length; i++){
+							if(!valid_response[i]) {
+								done = false;
+							}
+						}
+						
+						if(done) {
+							endTrial(response_times, key_presses);
+						}
+					}
+				}
+					
+				$(document).keydown(resp_func);
+					
+				function endTrial(rt, keys){
+				
+					trial_complete = true;
+					
+					// remove display content
+					display_element.html('');
+				
+					var trial_data = {
+						"trial_type": "twostim-tworesponse",
+						"trial_index": block.trial_idx,
+						"rt": JSON.stringify(rt),
+						"stimulus": trial.a_path,
+						"stimulus_2": trial.b_path,
+						"timing_first_stim": trial.timing_first_stim,
+						"key_press": JSON.stringify(keys)
+					};
+					block.writeData($.extend({}, trial_data, trial.data));
+					
+					$(document).unbind('keydown', resp_func);
 
-                        var trial_data = {
-                            "trial_type": "same-different",
-                            "trial_index": block.trial_idx,
-                            "rt": rt,
-                            "correct": correct,
-                            "stimulus": trial.a_path,
-                            "stimulus_2": trial.b_path,
-                            "key_press": e.which
-                        };
-                        block.data[block.trial_idx] = $.extend({}, trial_data, trial.data);
-                        $(document).unbind('keydown', resp_func);
-
-                        display_element.html('');
-                        if(trial.timing_post_trial > 0) {
-                            setTimeout(function() {
-                                block.next();
-                            }, trial.timing_post_trial);
-                        } else {
-                            block.next();
-                        }
-                    }
-                };
-                $(document).keydown(resp_func);
-                break;
+				   
+					if(trial.timing_post_trial > 0) {
+						setTimeout(function() {
+							block.next();
+						}, trial.timing_post_trial);
+					} else {
+						block.next();
+					}
+                    
+                }
             }
         };
 
