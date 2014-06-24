@@ -107,6 +107,8 @@
 		var experiment = [];
 		for(var row = 0; row < trials.length; row++){
 			var block = { 
+				type: 'twostim-tworesponse',
+				choices:[[48,49,50,51,52],[80,81]],
 				stimuli: trials[row].stimuli,
 				timing_first_stim: trials[row].timing_first_stim
 				};
