@@ -22,142 +22,100 @@
     </body>
     
     <script type="text/javascript">
-		// create a stimulus
-		//var s = createStimulus();
 	
-        // Experiment parameters
-        //var stimuli = [s, s, createStimulus()];
-        
-        // Experiment Instructions
-        var welcome_message = '<div id="instructions"><p>Welcome to the experiment. Press enter to begin.</p></div>';
-        
-        var instructions = '<div id="instructions"><p>You will see a series of images that look similar to this:</p>\
-            <p><img src="img/incongruent_right.gif"></p><p>Press the arrow key that corresponds to the direction that\
-            the middle arrow is pointing. For example, in this case you would press the right arrow key.</p>\
-            <p>Press enter to start.</p>';
-
-        var debrief = '<div id="instructions"><p>Thank you for participating! Press enter to see the data.</p></div>';
-
-        
-        // Define experiment blocks
- /*        var instruction_block = {
-                type: "text",
-                text: [welcome_message, instructions],
-                timing_post_trial: 2500
-            };
-       
-		var practice_block = {
-				type: "single-stim",
-				stimuli: stimuli,
-				choices: [48,49,50,51,52,53,54,55,56,57,69,79],
-				is_html: true
-			};
+		/* Define all possible trials */
+		var numMatrix = [
+			['10','4','6','5','1','3'],
+			['11','4','7','6','1','3'],
+			['9','4','5','2','3','1'],
+			['12','4','8','5','3','1'],
+			['13','4','9','6','3','1',],
+			['8','3','5','4','1','2'],
+			['9','3','6','4','2','1'],
+			['11','5','6','4','2','3'],
+			['12','5','7','4','3','2'],
+			['15','6','9','4','5','1'], 
+			['11','5','6','4','2','3'],
+			['13','5','8','6','2','3'],
+			['14','5','9','7','2','3'],
+			['12','5','7','4','3','2'],
+			['14','5','9','6','3','2'],
+			['15','5','10','7','3','2'],
+			['12','5','7','3','4','1'],
+			['15','5','10','6','4','1'],
+			['16','5','11','7','4','1'],
+			['9','3','6','5','1','2'],
+			['10','4','6','5','1','3'],
+			['10','3','7','5','2','1'],
+			['13','6','7','5','2','4'],
+			['12','4','8','5','3','1'],
+			['15','7','8','5','3','4'],
+			['15','6','9','5','4','2'],
+			['16','7','9','5','4','3'],
+			['18','7','11','5','6','1'],
+			['14','6','8','7','1','5'],
+			['15','6','9','8','1','5'],
+			['13','6','7','5','2','4'],
+			['15','6','9','7','2','4'],
+			['16','6','10','8','2','4'],
+			['15','6','9','5','4','2'],
+			['17','6','11','7','4','2'],
+			['18','6','12','8','4','2'],
+			['15','6','9','4','5','1'],
+			['18','6','12','7','5','1'],
+			['19','6','13','8','5','1'],
+			['11','4','7','6','1','3'],
+			['12','5','7','6','1','4'],
+			['13','5','8','6','2','3'],
+			['15','7','8','6','2','5'],
+			['13','4','9','6','3','1'],
+			['14','5','9','6','3','2'],
+			['16','7','9','6','3','4'],
+			['17','8','9','6','3','5'],
+			['15','5','10','6','4','1'],
+			['17','8','9','6','3','5'],
+			['15','5','10','6','4','1'],
+			['17','7','10','6','4','3'],
+			['18','7','11','6','5','2'],
+			['19','8','11','6','5','3'],
+			['21','8','13','6','7','1']
+		];
 		
-        var test_block = {
-                type: "single-stim",
-                stimuli: stimuli,
-                choices: [48,49,50,51,52,53,54,55,56,57,69,79],
-                //data: opt_data,
-                is_html: true
-            };
-            
-        var debrief_block = {
-                type: "text",
-                text: [debrief]
-            };
-
-
-  var stimuli_random_order = [];
-        var opt_data = [];
-
-        for (var i = 0; i < 128; i++) {
-            var random_choice = Math.floor(Math.random() * stimuli_random_order.length);
-
-            stimuli_random_order.push(stimuli[random_choice]);
-            opt_data.push({
-                "stimulus_type": stimuli_types[random_choice]
-            });
-        }
-*/		
-		// create experiment with a loop
-		var experiment = [];
+//probes.length + times.length = 24 unique trial type presentations. There need to be 4 repetitions of each trial type presentation.  24 * 4 = 96 total trials.
 		
-		var stimulus = [createStimulus(1), createStimulus(1)];
+		var probes = [1,2,3,4,5,6];
+		var showProbe = probes[Math.floor(Math.random()*6)];
 		
-		var newplugin_block = {
-			type: 'twostim-tworesponse',
-			stimuli: [stimulus],
-			timing_first_stim: 1000,
-			timing_second_stim: -1, // show forever
-			is_html: true
-		};
+		var times = [500,1000,1500,2000];
+		var pick_times = times[Math.floor(Math.random()*4)];
 		
-		experiment.push(newplugin_block);
+		var trials = []; 
 		
-	/*
-	 for now, comment all this out to test the new plugin
-	 
-	var trial = [1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4];
-		_.shuffle(trial);
-		for ( var i = 0; i < 128; i++){
-		
-			var stim_type = trial[i];			
-
-			var stim = createStimulus(stim_type);
-			
-			var sample_data = {
-				type: 'type 1',
-				answer_type: 'odd/even' // or 'answer'
-			};
-			
-			var delay_options = [0, 500, 1000, 1500, 2000];
-			var delay = delay_options[Math.floor(Math.random()*5)];
-		
-			var pre_answer_block = {
-				type: "single-stim",
-                stimuli: [stim],
-                choices: [48,49,50,51,52,53,54,55,56,57,69,79],
-                data: sample_data,
-                is_html: true,
-				timing_post_trial: 0,
-				timing_stimulus: delay,
-				timing_response: delay,
-				continue_after_response: false
-				//prompt: "Solve the problem and press 'o' for odd and 'e' for even.  It does not matter which you do first."
-			};
-		
-			var first_answer_block = {
-				type: "single-stim",
-                stimuli: [stim],
-                choices: [48,49,50,51,52,53,54,55,56,57,69,79],
-                data: sample_data,
-                is_html: true,
-				timing_post_trial: 0
-				//prompt: "Solve the problem and press 'o' for odd and 'e' for even.  It does not matter which you do first."
-			};
-			
-			var second_answer_block = {
-				type: "single-stim",
-                stimuli: [stim],
-                choices: [48,49,50,51,52,53,54,55,56,57,69,79],
-                //data: opt_data,
-                is_html: true
-				//prompt: "Solve the problem and press 'o' for odd and 'e' for even.  It does not matter which you do first."
-			};
-			
-			if(delay != 0) {
-				experiment.push(pre_answer_block);
-			}
-			experiment.push(first_answer_block);
-			experiment.push(second_answer_block);
-			 
+		//instead of i increasing until numMatrix.length, should it not increase until the total number of trials is reached (96)?
+		for (var i=0;i<96;i++) {
+		var t = {};
+		t.stimuli = [createStimulus(numMatrix[i]), createStimulus(numMatrix[i])];
+		t.timing_first_stim = pick_times;
+		trials.push(t);
 		}
-		*/
-           
-
+		
+		//trials is an [] with 400 + elements
+		//so, trials[10] is an object that looks like:
+		//trials[10].stimuli = [stimulus1, stimulus2];
+		//trials[10].timing_first_stim = 750;
+		
+		var experiment = [];
+		for(var row = 0; row < trials.length; row++){
+			var block = { 
+				stimuli: trials[row].stimuli,
+				timing_first_stim: trials[row].timing_first_stim
+				};
+		experiment.push(block);
+		}
+		        
         jsPsych.init({
             display_element: $('#jspsych_target'),
-            experiment_structure: experiment, //[instruction_block, practice_block, test_block, debrief_block],
+            experiment_structure: experiment,
             on_finish: function(data) {
                 $("#jspsych_target").append($('<pre>', {
                     html: jsPsych.dataAsCSV()
