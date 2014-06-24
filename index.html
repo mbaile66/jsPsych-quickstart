@@ -92,11 +92,11 @@
 		var trials = []; 
 		
 		//instead of i increasing until numMatrix.length, should it not increase until the total number of trials is reached (96)?
-		for (var i=0;i<96;i++) {
-		var t = {};
-		t.stimuli = [createStimulus(numMatrix[i]), createStimulus(numMatrix[i])];
-		t.timing_first_stim = pick_times;
-		trials.push(t);
+		for (var i=0;i<54;i++) {
+			var t = {};
+			t.stimuli = [createStimulus(numMatrix[i]), createStimulus(numMatrix[i])];
+			t.timing_first_stim = pick_times;
+			trials.push(t);
 		}
 		
 		//trials is an [] with 400 + elements
