@@ -53,14 +53,16 @@
             }
 
             setTimeout(function() {
-                $('.jspsych-twostim-tworesponse-stimulus').remove();
-                if (trial.timing_gap === 0) {
-                    showSecondImage();
-                }
-                else {
-                    setTimeout(function() {
+                if(!trial_complete){
+                    $('.jspsych-twostim-tworesponse-stimulus').remove();
+                    if (trial.timing_gap === 0) {
                         showSecondImage();
-                    }, trial.timing_gap);
+                    }
+                    else {
+                        setTimeout(function() {
+                            showSecondImage();
+                        }, trial.timing_gap);
+                    }
                 }
             }, trial.timing_first_stim);
 
