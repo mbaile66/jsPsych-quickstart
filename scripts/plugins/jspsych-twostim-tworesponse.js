@@ -46,15 +46,15 @@
             return trials;
         };
 
-        plugin.trial = function(display_element, block, trial, part) {
+		plugin.trial = function(display_element, block, trial, part) {
             
-            // if any trial variables are functions
-            // this evaluates the function and replaces
-            // it with the output of the function
-            
-            // put this back in after updating to jsPsych v2.4
-            //trial = jsPsych.normalizeTrialVariables(trial);
+			// if any trial variables are functions
+			// this evaluates the function and replaces
+			// it with the output of the function
 			
+			// put this back in after updating to jsPsych v2.4
+			//trial = jsPsych.normalizeTrialVariables(trial);
+				
 			var trial_complete = false;
               
 			// show image
@@ -63,8 +63,7 @@
 					src: trial.a_path,
 					"class": 'jspsych-twostim-tworesponse-stimulus'
 				}));
-			}
-			else {
+			} else {
 				display_element.append($('<div>', {
 					html: trial.a_path,
 					"class": 'jspsych-twostim-tworesponse-stimulus'
@@ -104,90 +103,90 @@
                         }
                     }, trial.timing_second_stim);
                 }
+			}
+			
+			var startTime = (new Date()).getTime();
 				
-                var startTime = (new Date()).getTime();
+			var valid_response = [];
+			for(var i=0; i<trial.choices.length; i++){
+				valid_response[i] = false;
+			}
+			
+			var response_times = [];
+			var key_presses = [];
+
+            var resp_func = function(e) {
+			
+				var endTime = (new Date()).getTime();
 				
-				var valid_response = [];
+				var valid_choice = false;
+				var which_choice = -1;
+				
 				for(var i=0; i<trial.choices.length; i++){
-					valid_response[i] = false;
-				}
-				
-				var response_times = [];
-				var key_presses = [];
-
-                var resp_func = function(e) {
-				
-					var endTime = (new Date()).getTime();
-					
-					var valid_choice = false;
-					var which_choice = -1;
-					
-					for(var i=0; i<trial.choices.length; i++){
-						for(var j=0; j<trial.choices[i].length; j++){
-							if(e.which == trial.choices[i][j]) {
-								which_choice = i;
-								if(valid_response[which_choice] === false) {
-									valid_choice = true;
-								}
+					for(var j=0; j<trial.choices[i].length; j++){
+						if(e.which == trial.choices[i][j]) {
+							which_choice = i;
+							if(valid_response[which_choice] === false) {
+								valid_choice = true;
 							}
 						}
 					}
+				}
+				
+                if (valid_choice) {
+				
+                    var rt = (endTime - startTime);
 					
-                    if (valid_choice) {
+					response_times[which_choice] = rt;
 					
-                        var rt = (endTime - startTime);
-						
-						response_times[which_choice] = rt;
-						
-						key_presses[which_choice] = e.which;
-						
-						valid_response[which_choice] = true;
-						
-						var done = true;
-						for(var i=0; i<valid_response.length; i++){
-							if(!valid_response[i]) {
-								done = false;
-							}
-						}
-						
-						if(done) {
-							endTrial(response_times, key_presses);
+					key_presses[which_choice] = e.which;
+					
+					valid_response[which_choice] = true;
+					
+					var done = true;
+					for(var i=0; i<valid_response.length; i++){
+						if(!valid_response[i]) {
+							done = false;
 						}
 					}
+					
+					if(done) {
+						endTrial(response_times, key_presses);
+					}
 				}
-					
-				$(document).keydown(resp_func);
-					
-				function endTrial(rt, keys){
+			}
 				
-					trial_complete = true;
-					
-					// remove display content
-					display_element.html('');
+			$(document).keydown(resp_func);
+			
+			function endTrial(rt, keys){
+			
+				trial_complete = true;
 				
-					var trial_data = {
-						"trial_type": "twostim-tworesponse",
-						"trial_index": block.trial_idx,
-						"rt": JSON.stringify(rt),
-						"stimulus": trial.a_path,
-						"stimulus_2": trial.b_path,
-						"timing_first_stim": trial.timing_first_stim,
-						"key_press": JSON.stringify(keys)
-					};
-					block.writeData($.extend({}, trial_data, trial.data));
-					
-					$(document).unbind('keydown', resp_func);
+				// remove display content
+				display_element.html('');
+			
+				var trial_data = {
+					"trial_type": "twostim-tworesponse",
+					"trial_index": block.trial_idx,
+					"rt": JSON.stringify(rt),
+					"stimulus": trial.a_path,
+					"stimulus_2": trial.b_path,
+					"timing_first_stim": trial.timing_first_stim,
+					"key_press": JSON.stringify(keys)
+				};
+				block.writeData($.extend({}, trial_data, trial.data));
+				
+				$(document).unbind('keydown', resp_func);
 
-				   
-					if(trial.timing_post_trial > 0) {
-						setTimeout(function() {
-							block.next();
-						}, trial.timing_post_trial);
-					} else {
+			   
+				if(trial.timing_post_trial > 0) {
+					setTimeout(function() {
 						block.next();
-					}
-                    
-                }
+					}, trial.timing_post_trial);
+				} else {
+					block.next();
+				}
+                
             }
         };
 
