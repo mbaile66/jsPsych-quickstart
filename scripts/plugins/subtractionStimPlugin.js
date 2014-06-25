@@ -45,7 +45,7 @@ function createStimulus (numbers, showProbe){
 				}
 	
 	 else if(showProbe == 6){
-				while (randProbeB = (numbers[0]) && (numbers[1]) && (numbers[2]) && (numbers[3]) && (numbers[4]) && (numbers[5]) && (numbers[1]+3) && (numbers[1]-3) && (numbers[1]+4) && (numbers[1]-4) && (numbers[1]+5) && (numbers[1]-5) && (numbers[1]+6) && (numbers[1]-6) && (numbers[1]+7) && (numbers[1]-7) && (numbers[1]+8) && (numbers[1]-8) && (numbers[1]+9) && (numbers[1]-9)); 
+				while (randProbeB = (numbers[0]) && (numbers[1]) && (numbers[2]) && (numbers[3]) && (numbers[4]) && (numbers[5]) && (numbers[3]+3) && (numbers[3]-3) && (numbers[3]+4) && (numbers[3]-4) && (numbers[3]+5) && (numbers[3]-5) && (numbers[3]+6) && (numbers[3]-6) && (numbers[3]+7) && (numbers[3]-7) && (numbers[3]+8) && (numbers[3]-8) && (numbers[3]+9) && (numbers[3]-9)); 
 					{randProbeA = _.random(1,9);
 					}
 			paper.text(xPosition+45, 340, randProbeB);
