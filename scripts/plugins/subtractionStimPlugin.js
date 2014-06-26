@@ -6,7 +6,7 @@ function createStimulus (numbers, showProbe){
 	var xPosition = 250;
 	var yPosition = 425;
 	var paper = Raphael("stimulus", width, height);
-	paper.text(xPosition,350,numbers[0]);
+	paper.text(xPosition,350,numbers[0]).attr({'font-size':24px});
 	paper.text(xPosition +15, 350, "-");
 	paper.text(xPosition+30, 350, numbers[2]);
 	paper.text(xPosition+45, 350, "-");
