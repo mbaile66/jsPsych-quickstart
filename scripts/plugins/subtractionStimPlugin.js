@@ -13,10 +13,10 @@ function createStimulus (numbers, showProbe, showFeedback, answerCorrect, probeC
 	paper.text(xPosition+225, 350, numbers[4]).attr({'font-size':48});
 	paper.text(xPosition+75, yPosition+100, "Answer  =").attr({'font-size':30});
 	
-	if (numMatrix == numMatrix4){
+	if (numMatrix == [numMatrix4]){
 		paper.text(xPosition+75, yPosition+150, "Is 4  present?").attr({'font-size':30});
 	}
-	else if (numMatrix == numMatrix5){
+	else if (numMatrix == [numMatrix5]){
 		paper.text(xPosition+75, yPosition+150, "Is 5  present?").attr({'font-size':30});
 	}
 	else {
@@ -30,15 +30,15 @@ function createStimulus (numbers, showProbe, showFeedback, answerCorrect, probeC
 	
 	if(showFeedback == true){
 		if(answerCorrect == true){
-			paper.image("img/checkmark.gif", xPosition-30, yPosition+80, 29, 35);
+			paper.image("img/checkmark.gif", xPosition-40, yPosition+80, 29, 35);
 			} else {
-				paper.image("img/xmark.gif", xPosition-30, yPosition+80, 29, 35);
+				paper.image("img/xmark.gif", xPosition-40, yPosition+80, 29, 35);
 				}
 	
 		if(probeCorrect == true){
-			paper.image("img/checkmark.gif", xPosition-30, yPosition+130, 29, 35);
+			paper.image("img/checkmark.gif", xPosition-40, yPosition+130, 29, 35);
 			} else {
-				paper.image("img/xmark.gif", xPosition-30, yPosition+130, 29, 35);
+				paper.image("img/xmark.gif", xPosition-40, yPosition+130, 29, 35);
 				}
 	}
 		
