@@ -180,7 +180,7 @@
 				var probes = [1,1,2,2,3,3,4,4,5];
 				var showProbe = probes[Math.floor(Math.random()*probes.length)];
 				var t = {};
-				t.stimuli = [createStimulus(numMatrix[w][i],0),createStimulus(numMatrix[w][i],showProbe,500)];
+				t.stimuli = [createStimulus(numMatrix[w][i],0),createStimulus(numMatrix[w][i],showProbe, true, true, true)];
 				t.timing_first_stim = pick_times;
 				t.choices = [[48,49,50,51,52,53,54,55,56,57],[78,89]];
 				if(showProbe == 5){
