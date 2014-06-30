@@ -15,6 +15,14 @@
 	<script src="scripts/plugins/jspsych-twostim-tworesponse.js"></script>
         <!-- Load the stylesheet -->
         <link href="experiment.css" type="text/css" rel="stylesheet"></link>
+        <style>
+        	p.fixation {
+        		font-family: 'Impact';
+        		font-size: 84px;
+        		display: block;
+        		margin: auto;
+        	}
+        </style>
     </head>
     
     <body>
@@ -253,6 +261,15 @@
 		experiment.push(instructions3);
 
 		for(var row = 0; row < trials.length; row++){
+			var fixation = {
+				type: 'single-stim',
+				choices: [],
+				timing_stim: 1000,
+				timing_response: 1000,
+				continue_after_response: false,
+				is_html: true,
+				stimuli: ['<p class="fixation">+</p>']
+			}
 			var block = { 
 				type: 'twostim-tworesponse',
 				choices: trials[row].choices,
