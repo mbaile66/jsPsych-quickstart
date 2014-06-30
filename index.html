@@ -249,7 +249,8 @@
 				stimuli: [trials[row].stimuli],
 				timing_first_stim: trials[row].timing_first_stim,
 				is_html: true,
-				data: [trials[row].data]
+				data: [trials[row].data],
+				timing_post_trial: 0
 				};
 			var feedback_block = {
 				type: 'single-stim',
@@ -266,9 +267,11 @@
 					}
 					return html;
 				}],
-				is_html: true
+				is_html: true,
+				timing_post_trial: 1000
 			}
 		experiment.push(block);
+		experiment.push(feedback_block);
 		}
 
         jsPsych.init({
