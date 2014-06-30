@@ -192,9 +192,9 @@
 				t.data = {};
 				var expectedProbeAnswer = 78;
 				if(showProbe == 1 || showProbe == 3) {
-					if(numMatrix[w][1] == numMatrix[w][6]) { expectedProbeAnswer = 89; }
+					if(numMatrix[w][i][1] == numMatrix[w][i][6]) { expectedProbeAnswer = 89; }
 				} else if(showProbe == 2 || showProbe == 4) {
-					if(numMatrix[w][3] == numMatrix[w][6]) { expectedProbeAnswer = 89; }
+					if(numMatrix[w][i][3] == numMatrix[w][i][6]) { expectedProbeAnswer = 89; }
 				} else {
 					expectedProbeAnswer = -1;
 				}
