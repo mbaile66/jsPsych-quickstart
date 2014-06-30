@@ -180,7 +180,7 @@
 
 		for(var w=0; w < 3; w++){
 			for (var i=0;i<numMatrix[w].length;i++) {
-				var probes = [1,1,2,2,3,3,4,4,5];
+				var probes = [1,1,1,1,2,2,2,2,5];
 				var showProbe = probes[Math.floor(Math.random()*probes.length)];
 				var t = {};
 				t.stimuli = [createStimulus(numMatrix[w][i],0),createStimulus(numMatrix[w][i],showProbe, true, true, true)];
@@ -191,9 +191,9 @@
 				}
 				t.data = {};
 				var expectedProbeAnswer = 78;
-				if(showProbe == 1 || showProbe == 3) {
+				if(showProbe == 1) {
 					if(numMatrix[w][i][1] == numMatrix[w][i][6]) { expectedProbeAnswer = 89; }
-				} else if(showProbe == 2 || showProbe == 4) {
+				} else if(showProbe == 2) {
 					if(numMatrix[w][i][3] == numMatrix[w][i][6]) { expectedProbeAnswer = 89; }
 				} else {
 					expectedProbeAnswer = -1;
