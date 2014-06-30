@@ -22,15 +22,15 @@ function createStimulus (numbers, showProbe, showFeedback, answerCorrect, probeC
 	
 	if(showFeedback == true){
 		if(answerCorrect == true){
-			paper.image("img/checkmark.gif", xPosition, yPosition+100, 29, 35);
+			paper.image("img/checkmark.gif", xPosition-10, yPosition+90, 29, 35);
 			} else {
-				paper.image("img/xmark.gif", xPosition, yPosition+100, 29, 35);
+				paper.image("img/xmark.gif", xPosition-10, yPosition+90, 29, 35);
 				}
 	
 		if(probeCorrect == true){
-			paper.image("img/checkmark.gif", xPosition, yPosition+150, 29, 35);
+			paper.image("img/checkmark.gif", xPosition-10, yPosition+140, 29, 35);
 			} else {
-				paper.image("img/xmark.gif", xPosition, yPosition+150, 29, 35);
+				paper.image("img/xmark.gif", xPosition-10, yPosition+140, 29, 35);
 				}
 	}
 		
