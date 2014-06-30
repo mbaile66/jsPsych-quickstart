@@ -1,6 +1,7 @@
 function createFixation (){
 	$('body').append($('<div id="stimulus"></div>'));
 	
+	var paper = Raphael("stimulus", width, height);
 	var width = 800;
 	var height = 600;
 	var xPosition = 250;
