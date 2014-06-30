@@ -171,7 +171,10 @@
 		var instructions3 = '<div id="instructions"><p>Sometimes you will not see a number above the subtraction signs.  Just type the answer when this happens. </p>\<p><img src="img/example3.gif"></p>\<p>Press Enter to begin some practice exercises.</p>';
 
 
-		var last_trial_correct = false; // for keeping track of answers to give feedback
+		var last_trial_probe_correct = false; // for keeping track of answers to give feedback
+		var last_trial_answer_correct = false; // for keeping track of answers to give feedback
+		var last_trial_nums = [];
+		var last_trial_show_probe = 0;
 
 	
 		var times = [500,1000,1500,2000];
@@ -183,13 +186,15 @@
 				var probes = [1,1,1,1,2,2,2,2,5];
 				var showProbe = probes[Math.floor(Math.random()*probes.length)];
 				var t = {};
-				t.stimuli = [createStimulus(numMatrix[w][i],0),createStimulus(numMatrix[w][i],showProbe, true, true, true)];
+				t.stimuli = [createStimulus(numMatrix[w][i],0),createStimulus(numMatrix[w][i],showProbe)];
 				t.timing_first_stim = pick_times;
 				t.choices = [[48,49,50,51,52,53,54,55,56,57],[78,89]];
 				if(showProbe == 5){
 					t.choices = [[48,49,50,51,52,53,54,55,56,57]];
 				}
+				
 				t.data = {};
+				
 				var expectedProbeAnswer = 78;
 				if(showProbe == 1) {
 					if(numMatrix[w][i][1] == numMatrix[w][i][6]) { expectedProbeAnswer = 89; }
@@ -199,7 +204,11 @@
 					expectedProbeAnswer = -1;
 				}
 				t.data.probeAnswer = expectedProbeAnswer;
+				
+				t.data.expectedActualAnswer = numMatrix[w][i][5].charCodeAt(0);
+				
 				t.data.problemCode = JSON.stringify(numMatrix[w][i]);
+				t.data.showProbe = showProbe;
 				trials.push(t);
 			}
 		}
@@ -260,12 +269,8 @@
 				continue_after_respone: false,
 				choices: [],
 				stimuli: [function(){
-					var html = "";
-					if(last_trial_correct) { 
-						html = "<p>Correct!</p>";
-					} else {
-						html = "<p>Wrong.</p>";
-					}
+					
+					var html = createStimulus(last_trial_nums, last_trial_show_probe, true, last_trial_answer_correct, last_trial_probe_correct);
 					return html;
 				}],
 				is_html: true,
@@ -287,12 +292,24 @@
             },
             on_data_update: function(data) {
             	if(data.trial_type == 'twostim-tworesponse') {
-            		var responses = JSON.parse(data.key_press)
+            		
+            		last_trial_nums = JSON.parse(data.problemCode);
+            		last_trial_show_probe = data.showProbe;
+            		
+            		var responses = JSON.parse(data.key_press);
             		if(_.contains(responses, data.probeAnswer)) {
-            			last_trial_correct = true;
+            			last_trial_probe_correct = true;
             		} else {
-            			last_trial_correct = false;
+            			last_trial_probe_correct = false;
             		}
+            		
+            		if(_.contains(responses, data.expectedActualAnswer)) {
+            			last_trial_answer_correct = true ;
+            		} else {
+            			last_trial_answer_correct = false; 
+            		}
+            		
+            		
             	}
             }
         });
