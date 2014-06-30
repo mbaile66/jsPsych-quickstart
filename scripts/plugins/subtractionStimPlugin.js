@@ -18,10 +18,9 @@ function createStimulus (numbers, showProbe, showFeedback, answerCorrect, probeC
 	}
 	else if (numMatrix = numMatrix5){
 		paper.text(xPosition+75, yPosition+150, "Is 5  present?").attr({'font-size':30});
+	}
 	else {
 		paper.text(xPosition+75, yPosition+150, "Is 6  present?").attr({'font-size':30});
-	}
-	}
 	}
 	if (showProbe == 1){
 		paper.text(xPosition+75, 325, numbers[1]).attr({'font-size':24});
