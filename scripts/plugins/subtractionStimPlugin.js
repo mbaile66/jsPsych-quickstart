@@ -18,10 +18,6 @@ function createStimulus (numbers, showProbe, showFeedback, answerCorrect, probeC
 		paper.text(xPosition+75, 325, numbers[1]).attr({'font-size':24});
 	} else if(showProbe == 2){
 		paper.text(xPosition+175, 325, numbers[3]).attr({'font-size':24});
-	} else if(showProbe == 3){
-		paper.text(xPosition+75, 325, numbers[3]).attr({'font-size':24});
-	} else if(showProbe == 4){
-		paper.text(xPosition+175, 325, numbers[1]).attr({'font-size':24});		
 	}
 	
 	if(showFeedback == true){
