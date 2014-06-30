@@ -266,9 +266,10 @@
 				choices: [],
 				timing_stim: 1000,
 				timing_response: 1000,
+				timing_post_trial: 0,
 				continue_after_response: false,
 				is_html: true,
-				stimuli: ['<p class="fixation">+</p>']
+				stimuli: [createFixation()]
 			}
 			var block = { 
 				type: 'twostim-tworesponse',
