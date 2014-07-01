@@ -4,7 +4,7 @@ function createStimulus (numbers, showProbe, showFeedback, answerCorrect, probeC
 	var width = 800;
 	var height = 600;
 	var xPosition = 250;
-	var yPosition = 425;
+	var yPosition = 225;
 	var paper = Raphael("stimulus", width, height);
 	paper.text(xPosition+25,350,numbers[0]).attr({'font-size':48});	
 	paper.text(xPosition +75, 350, "-").attr({'font-size':48});
