@@ -4,9 +4,8 @@ function createFixation (){
 	var width = 800;
 	var height = 800;
 	var paper = Raphael("stimulus", width, height);
-	var xPosition = 250;
 		
-	paper.text(xPosition+125, 350, "+").attr({'font-size':48});	
+	paper.text(375, 150, "+").attr({'font-size':48});	
 	
 	var html = $('#stimulus').html();
 	$('#stimulus').remove();
