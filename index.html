@@ -170,7 +170,7 @@
 		var instructions1 = '<div id="instructions"><p>During the experiment, you will be asked to solve a series of subtraction problems that look like this:</p>\<p><img src="img/example1.gif"></p>\<p>Press Enter to continue.</p>';
 		var instructions2 = '<div id="instructions"><p>Use the number keys 0-9 on top of your keyboard to type the answer, and the "y" or "n" key for "yes" or "no". </p>\<p><img src="img/example2.gif"></p>\<p>Solve the problems and determine whether you see a certain number above the subtraction signs.  Work as quickly as you can without sacrificing accuracy.  Always work from the leftmost number to the rightmost when subtracting.</p>\<p>Press Enter to continue.</p>';
 		var instructions3 = '<div id="instructions"><p>Sometimes you will not see a number above the subtraction signs.  Just type the answer when this happens. </p>\<p><img src="img/example3.gif"></p>\<p>Press Enter to begin some practice exercises.</p>';
-
+		var instructions4 = '<div id="instructions"><p>End of practice.  Press Enter to begin the experiment.</p>';
 
 		var last_trial_probe_correct = false; // for keeping track of answers to give feedback
 		var last_trial_answer_correct = false; // for keeping track of answers to give feedback
@@ -252,6 +252,53 @@
 		};
 
 		experiment.push(instructions3);
+		
+		for(var row = 0; row < 10; row++){
+			var fixationPractice = {
+				type: 'single-stim',
+				choices: [],
+				timing_stim: 1000,
+				timing_response: 1000,
+				timing_post_trial: 0,
+				continue_after_response: false,
+				is_html: true,
+				stimuli: [createFixation()]
+			}
+			var blockPractice = { 
+				type: 'twostim-tworesponse',
+				choices: trials[row].choices,
+				stimuli: [trials[row].stimuli],
+				timing_first_stim: trials[row].timing_first_stim,
+				is_html: true,
+				data: [trials[row].data],
+				timing_post_trial: 0
+				};
+			var feedback_blockPractice = {
+				type: 'single-stim',
+				timing_stim: 2000,
+				timing_response: 2000,
+				continue_after_respone: false,
+				choices: [],
+				stimuli: [function(){
+
+					var html = createStimulus(last_trial_nums, last_trial_show_probe, true, last_trial_answer_correct, last_trial_probe_correct);
+					return html;
+				}],
+				is_html: true,
+				timing_post_trial: 1000
+			}
+		experiment.push(fixationPractice);
+		experiment.push(blockPractice);
+		experiment.push(feedback_blockPractice);
+		}
+		
+		instructions4 = {
+			type: 'text',
+			text: [instructions3],
+			timing_post_trial: 2500
+		};
+
+		experiment.push(instructions4);
 
 		for(var row = 0; row < trials.length; row++){
 			var fixation = {
