@@ -30,15 +30,15 @@ function createStimulus (numbers, showProbe, showFeedback, answerCorrect, probeC
 	
 	if(showFeedback == true){
 		if(answerCorrect == true){
-			paper.image("img/checkmark.gif", xPosition+110, yPosition+80, 29, 35);
+			paper.image("img/checkmark.gif", xPosition+80, yPosition+80, 29, 35);
 			} else {
-				paper.image("img/xmark.gif", xPosition+110, yPosition+80, 29, 35);
+				paper.image("img/xmark.gif", xPosition+80, yPosition+80, 29, 35);
 				}
 	
 		if(probeCorrect == true){
-			paper.image("img/checkmark.gif", xPosition-130, yPosition+130, 29, 35);
+			paper.image("img/checkmark.gif", xPosition-145, yPosition+130, 29, 35);
 			} else {
-				paper.image("img/xmark.gif", xPosition-130, yPosition+130, 29, 35);
+				paper.image("img/xmark.gif", xPosition-145, yPosition+130, 29, 35);
 				}
 	}
 		
