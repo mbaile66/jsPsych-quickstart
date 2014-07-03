@@ -28,7 +28,7 @@ function createStimulus (numbers, showProbe, showFeedback, answerCorrect, probeC
 		paper.text(xPosition+175, 125, numbers[3]).attr({'font-size':24});
 	}
 	
-	if(showFeedback == true){
+	if(showFeedback == false){
 		if(answerCorrect == true){
 			paper.image("img/checkmark.gif", xPosition+70, yPosition+80, 29, 35);
 			} else {
