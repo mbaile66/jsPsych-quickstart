@@ -44,10 +44,13 @@ function createStimulus (numbers, showProbe, showFeedback, answerCorrect, probeC
 				}
 	
 		if(probeCorrect == true){
-			paper.image("img/checkmark.gif", xPosition+100, yPosition+130, 29, 35);
-			} else {
-				paper.image("img/xmark.gif", xPosition+100, yPosition+130, 29, 35);
-				}
+			if(showProbe <= 2){
+				paper.image("img/checkmark.gif", xPosition+100, yPosition+130, 29, 35);
+				 else {
+					paper.image("img/xmark.gif", xPosition+100, yPosition+130, 29, 35);
+					}
+			}
+		}
 	}
 		
 	
