@@ -43,7 +43,7 @@ function createStimulus (numbers, showProbe, showFeedback, answerCorrect, probeC
 				paper.image("img/xmark.gif", xPosition+240, yPosition+80, 29, 35);
 				}
 	
-		if(probeCorrect == true){
+		if(probeCorrect == true && showProbe < 3){
 			paper.image("img/checkmark.gif", xPosition+100, yPosition+130, 29, 35);
  			} else {
  				paper.image("img/xmark.gif", xPosition+100, yPosition+130, 29, 35);
