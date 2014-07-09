@@ -38,15 +38,15 @@ function createStimulus (numbers, showProbe, showFeedback, answerCorrect, probeC
 		}
 		
 		if(answerCorrect == true){
-			paper.image("img/checkmark.gif", xPosition+170, yPosition+80, 29, 35);
+			paper.image("img/checkmark.gif", xPosition+270, yPosition+80, 29, 35);
 			} else {
-				paper.image("img/xmark.gif", xPosition+170, yPosition+80, 29, 35);
+				paper.image("img/xmark.gif", xPosition+270, yPosition+80, 29, 35);
 				}
 	
 		if(probeCorrect == true){
-			paper.image("img/checkmark.gif", xPosition-20, yPosition+130, 29, 35);
+			paper.image("img/checkmark.gif", xPosition, yPosition+130, 29, 35);
 			} else {
-				paper.image("img/xmark.gif", xPosition-20, yPosition+130, 29, 35);
+				paper.image("img/xmark.gif", xPosition, yPosition+130, 29, 35);
 				}
 	}
 		
