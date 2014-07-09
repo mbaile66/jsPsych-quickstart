@@ -27,7 +27,7 @@ function createStimulus (numbers, showProbe, showFeedback, answerCorrect, probeC
 		paper.text(xPosition+225, yPosition+100, numbers[5]).attr({'font-size':30});
 		paper.text(xPosition+150, yPosition+100, "Answer =").attr({'font-size':30});
 		
-		if(showProbe <= 3){
+		if(showProbe < 3){
 		if (numbers[6] == 4){
 		paper.text(xPosition+25, yPosition+150, "4  present?").attr({'font-size':30});
 		}
@@ -45,7 +45,7 @@ function createStimulus (numbers, showProbe, showFeedback, answerCorrect, probeC
 				paper.image("img/xmark.gif", xPosition+240, yPosition+80, 29, 35);
 				}
 	
-		if(showProbe <= 3){
+		if(showProbe < 3){
 		if(probeCorrect == true){
 			paper.image("img/checkmark.gif", xPosition+100, yPosition+130, 29, 35);
  			} else {
