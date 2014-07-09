@@ -24,7 +24,7 @@ function createStimulus (numbers, showProbe, showFeedback, answerCorrect, probeC
 	
 	if(showFeedback == true){
 		
-		paper.text(xPosition+175, yPosition+100, "Answer  =").attr({'font-size':30});
+		paper.text(xPosition+175, yPosition+100, "Answer  =" numbers[5]).attr({'font-size':30});
 		
 		if (numbers[6] == 4){
 		paper.text(xPosition+25, yPosition+150, "4  present?").attr({'font-size':30});
