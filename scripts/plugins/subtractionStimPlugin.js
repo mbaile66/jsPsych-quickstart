@@ -28,15 +28,18 @@ function createStimulus (numbers, showProbe, showFeedback, answerCorrect, probeC
 		paper.text(xPosition+150, yPosition+100, "Answer =").attr({'font-size':30});
 		
 		if(showProbe < 3){
-		if (numbers[6] == 4){
-		paper.text(xPosition+25, yPosition+150, "4  present?").attr({'font-size':30});
-		}
-		else if (numbers[6] == 5){
-		paper.text(xPosition+25, yPosition+150, "5  present?").attr({'font-size':30});
-		}
-		else {
-		paper.text(xPosition+25, yPosition+150, "6  present?").attr({'font-size':30});
-		}
+			if (numbers[6] == 3){
+			paper.text(xPosition+25, yPosition+150, "3  present?").attr({'font-size':30});
+			}
+			else if (numbers[6] == 4){
+			paper.text(xPosition+25, yPosition+150, "4  present?").attr({'font-size':30});
+			}
+			else if (numbers[6] == 5){
+			paper.text(xPosition+25, yPosition+150, "5  present?").attr({'font-size':30});
+			}
+			else {
+			paper.text(xPosition+25, yPosition+150, "6  present?").attr({'font-size':30});
+			}
 		}
 		
 		if(answerCorrect == true){
