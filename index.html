@@ -359,10 +359,10 @@
 		experiment.push(instructions4);
 		
 		// add a loop for the three blocks
-		for(var block = 0; block < 3; block++){
+		for(var b = 0; b < 3; b++){
 			
 			var which_probe = "";
-			if(block == 0) { which_probe = "4"; }
+			if(b == 0) { which_probe = "4"; }
 			
 			var beginBlockText = '<div id="instructions"><p>For this set of subtraction problems, determine whether there is a which_probe above the subtraction signs.  Press "y" for yes and "n" for no.</p>\<p>  Press Enter to continue.</p>';
 			
@@ -374,7 +374,7 @@
 			
 			experiment.push(beginBlockText);
 			
-			for(var row = 0; row < trials[block].length; row++){
+			for(var row = 0; row < trials[b].length; row++){
 				var fixation = {
 					type: 'single-stim',
 					choices: [],
@@ -387,11 +387,11 @@
 				}
 				var block = { 
 					type: 'twostim-tworesponse',
-					choices: trials[block][row].choices,
-					stimuli: [trials[block][row].stimuli],
-					timing_first_stim: trials[block][row].timing_first_stim,
+					choices: trials[b][row].choices,
+					stimuli: [trials[b][row].stimuli],
+					timing_first_stim: trials[b][row].timing_first_stim,
 					is_html: true,
-					data: [trials[block][row].data],
+					data: [trials[b][row].data],
 					timing_post_trial: 0
 					};
 				var feedback_block = {
