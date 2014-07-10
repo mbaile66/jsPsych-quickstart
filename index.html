@@ -227,7 +227,7 @@
 				t.data.showProbe = showProbe;
 				practiceBlock.push(t);
 			}
-			trials.push(practiceBlock);
+		//	trials.push(practiceBlock);
 		
 		//experiment block loop
 		for(var w=0; w < 3; w++){
@@ -324,11 +324,11 @@
 			}
 			var blockPractice = { 
 				type: 'twostim-tworesponse',
-				choices: trials[row].choices,
-				stimuli: [trials[row].stimuli],
+				choices: practiceBlock[row].choices,
+				stimuli: [practiceBlock[row].stimuli],
 				timing_first_stim: trials[row].timing_first_stim,
 				is_html: true,
-				data: [trials[row].data],
+				data: [practiceBlock[row].data],
 				timing_post_trial: 0
 				};
 			var feedback_blockPractice = {
