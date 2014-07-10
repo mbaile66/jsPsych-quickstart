@@ -184,6 +184,7 @@
 		var instructions2a = '<div id="instructions"><p>You can make the two responses (0-9 and y/n) at any time.  It does not matter which order they are in. After you make the two responses, you will be told whether or not you answered correctly.</p>\ <p><img src="img/example2a.gif"</p> \ <p>Press Enter to continue. </p>';
 		var instructions3 = '<div id="instructions"><p>Sometimes you will not see a number above the subtraction signs.  Just type the answer when this happens. </p>\<p><img src="img/example3.gif"></p>\<p>Work as quickly as you can without sacrificing accuracy.</p>\<p>Press Enter to start some practice problems.</p>';
 		var instructions4 = '<div id="instructions"><p>End of practice.  Press Enter to begin the experiment.</p>';
+		var practiceText = '<div id="instructions"><p>For this practice set of subtraction problems, determine whether the number 3 is above the subtraction signs.  Press "y" for yes and "n" for no.</p>\<p>  Press Enter to continue.</p>';
 		var experimentEnd = '<div id="instructions"><p>The experiment has ended.  Press Enter to exit.  Thank you for participating.</p>';
 		
 		var last_trial_probe_correct = false; // for keeping track of answers to give feedback
@@ -306,6 +307,14 @@
 		instructions3 = {
 			type: 'text',
 			text: [instructions3],
+			timing_post_trial: 500
+		};
+
+		experiment.push(instructions3);
+		
+		practiceText = {
+			type: 'text',
+			text: [practiceText],
 			timing_post_trial: 2500
 		};
 
