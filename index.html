@@ -185,6 +185,7 @@
 		var trials = [];	
 
 		for(var w=0; w < 3; w++){
+			var trialsblock = [];
 			for (var i=0;i<numMatrix[w].length;i++) {
 				var probes = [1,1,1,1,2,2,2,2,5];
 				var showProbe = probes[Math.floor(Math.random()*probes.length)];
@@ -212,8 +213,9 @@
 				
 				t.data.problemCode = JSON.stringify(numMatrix[w][i]);
 				t.data.showProbe = showProbe;
-				trials.push(t);
+				trialsblock.push(t);
 			}
+			trials.push(trialsblock);
 		}
 
 		//trials is an [] with 400 + elements
@@ -309,45 +311,57 @@
 		};
 
 		experiment.push(instructions4);
-
-		for(var row = 0; row < trials.length; row++){
-			var fixation = {
-				type: 'single-stim',
-				choices: [],
-				timing_stim: 1000,
-				timing_response: 1000,
-				timing_post_trial: 0,
-				continue_after_response: false,
-				is_html: true,
-				stimuli: [createFixation()]
+		
+		// add a loop for the three blocks
+		for(var block = 0; block < 3; block++){
+			
+			// this is where the start of the block happens
+			// put the text plugin to show instructions on probe
+			// here
+			
+			var which_probe = "";
+			if(block == 0) { which_probe = "4"; }
+			
+			for(var row = 0; row < trials[block].length; row++){
+				var fixation = {
+					type: 'single-stim',
+					choices: [],
+					timing_stim: 1000,
+					timing_response: 1000,
+					timing_post_trial: 0,
+					continue_after_response: false,
+					is_html: true,
+					stimuli: [createFixation()]
+				}
+				var block = { 
+					type: 'twostim-tworesponse',
+					choices: trials[block][row].choices,
+					stimuli: [trials[block][row].stimuli],
+					timing_first_stim: trials[block][row].timing_first_stim,
+					is_html: true,
+					data: [trials[block][row].data],
+					timing_post_trial: 0
+					};
+				var feedback_block = {
+					type: 'single-stim',
+					timing_stim: 2000,
+					timing_response: 2000,
+					continue_after_respone: false,
+					choices: [],
+					stimuli: [function(){
+						
+						var html = createStimulus(last_trial_nums, last_trial_show_probe, true, last_trial_answer_correct, last_trial_probe_correct);
+						return html;
+					}],
+					is_html: true,
+					timing_post_trial: 1000
+				}
+				experiment.push(fixation);
+				experiment.push(block);
+				experiment.push(feedback_block);
 			}
-			var block = { 
-				type: 'twostim-tworesponse',
-				choices: trials[row].choices,
-				stimuli: [trials[row].stimuli],
-				timing_first_stim: trials[row].timing_first_stim,
-				is_html: true,
-				data: [trials[row].data],
-				timing_post_trial: 0
-				};
-			var feedback_block = {
-				type: 'single-stim',
-				timing_stim: 2000,
-				timing_response: 2000,
-				continue_after_respone: false,
-				choices: [],
-				stimuli: [function(){
-					
-					var html = createStimulus(last_trial_nums, last_trial_show_probe, true, last_trial_answer_correct, last_trial_probe_correct);
-					return html;
-				}],
-				is_html: true,
-				timing_post_trial: 1000
-			}
-		experiment.push(fixation);
-		experiment.push(block);
-		experiment.push(feedback_block);
 		}
+		
 
 		experimentEnd = {
 			type: 'text',
