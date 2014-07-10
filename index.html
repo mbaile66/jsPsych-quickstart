@@ -25,6 +25,18 @@
     <script type="text/javascript">
 
 		/* Define all possible trials */
+		var numMatrix3 = [
+			['7','3','4','2','2','1','3']
+			['9','4','5','3','2','2','3']
+			['10','3','7','6','1','2','3']
+			['12','6','6','3','3','3','3']
+			['8','3','5','3','2','1','3']
+			['5','3','2','1','1','2','3']
+			['8','3','5','4','1','2','3']
+			['9','3','6','5','1','2','3']
+			['11','6','5','3','2','4','3']
+			['6','3','3','2','1','2','3']
+				];
 		var numMatrix4 = [
 			['10','4','6','5','1','3','4'],
 			['11','4','7','6','1','3','4'],
@@ -184,6 +196,41 @@
 		var pick_times = times[Math.floor(Math.random()*4)];
 		var trials = [];	
 
+		//practice block loop
+			var practiceBlock = [];
+			for (var i=0;i<numMatrix3.length;i++) {
+				var probes = [1,1,1,1,2,2,2,2,5];
+				var showProbe = probes[Math.floor(Math.random()*probes.length)];
+				var t = {};
+				t.stimuli = [createStimulus(numMatrix3[i],0),createStimulus(numMatrix3[i],showProbe)];
+				t.timing_first_stim = pick_times;
+				t.choices = [[48,49,50,51,52,53,54,55,56,57],[78,89]];
+				if(showProbe == 5){
+					t.choices = [[48,49,50,51,52,53,54,55,56,57]];
+				}
+				
+				t.data = {};
+				
+				var expectedProbeAnswer = 78;
+				if(showProbe == 1) {
+					if(numMatrix3[i][1] == numMatrix3[i][6]) { expectedProbeAnswer = 89; }
+				} else if(showProbe == 2) {
+					if(numMatrix3[i][3] == numMatrix3[i][6]) { expectedProbeAnswer = 89; }
+				} else {
+					expectedProbeAnswer = -1;
+				}
+				t.data.probeAnswer = expectedProbeAnswer;
+				
+				t.data.expectedActualAnswer = numMatrix3[i][5].charCodeAt(0);
+				
+				t.data.problemCode = JSON.stringify(numMatrix3[i]);
+				t.data.showProbe = showProbe;
+				practiceBlock.push(t);
+			}
+			trials.push(practiceBlock);
+		}
+		
+		//experiment block loop
 		for(var w=0; w < 3; w++){
 			var trialsblock = [];
 			for (var i=0;i<numMatrix[w].length;i++) {
@@ -315,12 +362,18 @@
 		// add a loop for the three blocks
 		for(var block = 0; block < 3; block++){
 			
-			// this is where the start of the block happens
-			// put the text plugin to show instructions on probe
-			// here
-			
 			var which_probe = "";
 			if(block == 0) { which_probe = "4"; }
+			
+			var beginBlockText = '<div id="instructions"><p>For this set of subtraction problems, determine whether there is a 'which_probe' above the subtraction signs.  Press "y" for yes and "n" for no.</p>\<p>  Press Enter to continue.</p>';
+			
+			beginBlockText = {
+				type: 'text',
+				text: [beginBlockText],
+				timing_post_trial: 2500
+			};
+			
+			experiment.push(beginBlockText);
 			
 			for(var row = 0; row < trials[block].length; row++){
 				var fixation = {
